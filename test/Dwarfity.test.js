@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect, assert } = require('chai');
 const { ethers } = require('hardhat');
 
 require('chai').use(require('chai-as-promised')).should();
@@ -118,15 +118,15 @@ describe('Dwarfity', function () {
         const dwarf_1_tokenId = dwarf_1.events[0].args.tokenId;
 
         await dwarfityCore
-          .connect(user2)
+          .connect(user1)
           .purchaseDwarfFromDeployer(dwarf_1_tokenId.toString(), {
             value: toWei(minPrice, 'ether')
           });
 
         const tokenId = await dwarfityCore.ownerOf(dwarf_1_tokenId.toString());
-        tokenId.toString().should.be.equal(user2.address);
+        tokenId.toString().should.be.equal(user1.address);
 
-        const balance = await dwarfityCore.balanceOf(user2.address);
+        const balance = await dwarfityCore.balanceOf(user1.address);
         balance.toString().should.be.equal('1');
 
         const contractBalance = await dwarfityCore.getContractBalance();
@@ -149,21 +149,28 @@ describe('Dwarfity', function () {
 
         //  Purchase
         await dwarfityCore
-          .connect(user2)
+          .connect(user1)
           .purchaseDwarfFromDeployer(dwarf_1_tokenId.toString(), {
             value: toWei(minPrice, 'ether')
           });
 
         await dwarfityCore
-          .connect(user2)
+          .connect(user1)
           .purchaseDwarfFromDeployer(dwarf_2_tokenId.toString(), {
             value: toWei(minPrice, 'ether')
           });
 
         //  Breed
         const breed = await (
-          await dwarfityCore.connect(user2).breedDwarves(dwarf_1_tokenId, dwarf_2_tokenId)
+          await dwarfityCore.connect(user1).breedDwarves(dwarf_1_tokenId, dwarf_2_tokenId)
         ).wait();
+
+        const eventIdx = breed.events.findIndex((e) => e.event === 'Birth');
+
+        //  Assertions
+        assert.notEqual(eventIdx, -1, 'There is no birth event');
+        breed.events[eventIdx].args.fatherTokenId.should.be.equal(dwarf_1_tokenId);
+        breed.events[eventIdx].args.motherTokenId.should.be.equal(dwarf_2_tokenId);
       });
     });
   });

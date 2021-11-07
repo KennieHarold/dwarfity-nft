@@ -25,7 +25,13 @@ module.exports = {
       }
     ],
     '@typescript-eslint/no-var-requires': 'off',
-    'node/no-unsupported-features/es-syntax': ['error', { ignores: ['modules'] }]
+    'node/no-unsupported-features/es-syntax': ['error', { ignores: ['modules'] }],
+    'node/no-unpublished-require': [
+      'error',
+      {
+        allowModules: ['redux-devtools-extension']
+      }
+    ]
   },
   overrides: [
     {

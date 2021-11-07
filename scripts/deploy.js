@@ -1,10 +1,20 @@
 const hre = require('hardhat');
+const fs = require('fs');
 
 async function main() {
-  const drafityCore = await hre.ethers.getContractFactory('DrafityCore');
-  await drafityCore.deployed();
+  const DwarfityCore = await hre.ethers.getContractFactory('DwarfityCore');
+  const dwarfityCore = await DwarfityCore.deploy();
 
-  console.log('DrafityCore deployed to:', drafityCore.address);
+  fs.copyFile(
+    './artifacts/contracts/DwarfityCore.sol/DwarfityCore.json',
+    './src/abis/DwarfityCore.json',
+    (err) => {
+      if (err) throw err;
+      console.log('DwarfityCore.json was copied to the abis directory');
+    }
+  );
+
+  console.log('DrafityCore deployed to:', dwarfityCore.address);
 }
 
 main().catch((error) => {

@@ -11,8 +11,8 @@ contract DwarfityBase is ERC721, GeneScience {
 
     struct Dwarf {
         string genes;
-        uint32 fatherId;
-        uint32 motherId;
+        uint256 fatherTokenId;
+        uint256 motherTokenId;
     }
 
     Dwarf[] public dwarves;
@@ -32,8 +32,8 @@ contract DwarfityBase is ERC721, GeneScience {
     }
 
     function createDwarf(
-        uint32 _fatherId,
-        uint32 _motherId,
+        uint256 _fatherTokenId,
+        uint256 _motherTokenId,
         string memory _genes,
         address _owner
     ) internal returns (uint256) {
@@ -41,7 +41,7 @@ contract DwarfityBase is ERC721, GeneScience {
 
         uint256 newTokenId = dwarfIndexTracker.current();
 
-        Dwarf memory _dwarf = Dwarf({genes: _genes, fatherId: _fatherId, motherId: _motherId});
+        Dwarf memory _dwarf = Dwarf({genes: _genes, fatherTokenId: _fatherTokenId, motherTokenId: _motherTokenId});
 
         _mint(_owner, newTokenId);
         dwarves.push(_dwarf);

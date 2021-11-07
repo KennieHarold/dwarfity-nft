@@ -6,6 +6,8 @@ import './DwarfityBase.sol';
 contract DwarfityCore is DwarfityBase {
     event Received(address, uint256);
 
+    event Birth(address owner, uint256 tokenId, uint256 fatherTokenId, uint256 motherTokenId, string genes);
+
     constructor() DwarfityBase('Dwarfity', 'DW') {
         createDwarf(0, 0, '000000000', msg.sender);
         setDeployer(msg.sender);
@@ -27,18 +29,33 @@ contract DwarfityCore is DwarfityBase {
     }
 
     function getDwarfByTokenId(uint256 _tokenId)
-        external
+        public
         view
         returns (
             string memory _genes,
-            uint256 _fatherId,
-            uint256 _motherId,
+            uint256 _fatherTokenId,
+            uint256 _motherTokenId,
             uint256 _rarity
         )
     {
         _genes = dwarves[_tokenId].genes;
-        _fatherId = dwarves[_tokenId].fatherId;
-        _motherId = dwarves[_tokenId].motherId;
+        _fatherTokenId = dwarves[_tokenId].fatherTokenId;
+        _motherTokenId = dwarves[_tokenId].motherTokenId;
         _rarity = dwarfCountPerGene[dwarves[_tokenId].genes];
+    }
+
+    function breedDwarves(uint256 _fatherTokenId, uint256 _motherTokenId) external {
+        require(msg.sender != deployer, 'Disallow deployer to breed');
+        require(ownerOf(_fatherTokenId) == msg.sender, 'Sender must own the token');
+        require(ownerOf(_motherTokenId) == msg.sender, 'Sender must own the tokem');
+
+        (string memory _fatherGene, , , ) = getDwarfByTokenId(_fatherTokenId);
+        (string memory _motherGene, , , ) = getDwarfByTokenId(_motherTokenId);
+
+        string memory newGene = mixGene(_fatherGene, _motherGene);
+
+        uint256 newTokenId = createDwarf(_fatherTokenId, _motherTokenId, newGene, msg.sender);
+
+        emit Birth(msg.sender, newTokenId, _fatherTokenId, _motherTokenId, newGene);
     }
 }

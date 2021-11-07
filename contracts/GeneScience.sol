@@ -45,12 +45,17 @@ contract GeneScience is Constants {
 
     //  Apply mock mutation for only 15% chance
     function mutation() internal view returns (int256, int256) {
+        // solhint-disable-next-line not-rely-on-time
         uint256 randomHash = uint256(keccak256(abi.encodePacked(block.difficulty, block.timestamp, HUNDRED)));
+
         uint256 randomNumber = randomHash % HUNDRED;
         bool isMutation = randomNumber < MUTATION_CHANCE;
 
         if (isMutation) {
+            // solhint-disable-next-line not-rely-on-time
             uint256 where = uint256(keccak256(abi.encodePacked(block.difficulty, block.timestamp, HUNDRED)));
+
+            // solhint-disable-next-line not-rely-on-time
             uint256 attr = uint256(keccak256(abi.encodePacked(block.difficulty, block.timestamp, HUNDRED)));
 
             return (int256(where % GENE_LENGTH), int256(attr % GENE_ATTRS));
@@ -77,6 +82,7 @@ contract GeneScience is Constants {
             len++;
             j /= 10;
         }
+
         bytes memory bstr = new bytes(len);
         uint256 k = len;
 

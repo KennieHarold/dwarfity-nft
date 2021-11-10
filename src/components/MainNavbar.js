@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
+import { loadProviderAndContract } from '../actions/BlockchainAction';
 
-function MainNavbar() {
+function MainNavbar(props) {
+  useEffect(() => {
+    props.loadProviderAndContract();
+  }, []);
+
   return (
-    <Navbar className="py-3" expand="lg" style={{ borderBottom: '1px solid lightgray' }}>
+    <Navbar
+      className="py-3"
+      expand="lg"
+      style={{ borderBottom: '1px solid lightgray' }}
+    >
       <Container>
         <Navbar.Brand href="/" className="fw-bold">
           Dwarfity
@@ -25,4 +35,4 @@ function MainNavbar() {
   );
 }
 
-export default MainNavbar;
+export default connect(null, { loadProviderAndContract })(MainNavbar);

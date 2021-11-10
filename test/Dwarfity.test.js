@@ -73,9 +73,15 @@ describe('Dwarfity', function () {
       it('mint dwarf for gen0', async () => {
         const randomGenes = [getRandomGene(), getRandomGene(), getRandomGene()];
 
-        const dwarf_1 = await (await dwarfityCore.mintGenesisDwarf(randomGenes[0])).wait();
-        const dwarf_2 = await (await dwarfityCore.mintGenesisDwarf(randomGenes[1])).wait();
-        const dwarf_3 = await (await dwarfityCore.mintGenesisDwarf(randomGenes[2])).wait();
+        const dwarf_1 = await (
+          await dwarfityCore.mintGenesisDwarf(randomGenes[0])
+        ).wait();
+        const dwarf_2 = await (
+          await dwarfityCore.mintGenesisDwarf(randomGenes[1])
+        ).wait();
+        const dwarf_3 = await (
+          await dwarfityCore.mintGenesisDwarf(randomGenes[2])
+        ).wait();
 
         const totalSupply = await dwarfityCore.dwarfIndexTracker();
         totalSupply.toString().should.be.equal('4');
@@ -114,7 +120,9 @@ describe('Dwarfity', function () {
         const randomGene = getRandomGene();
         const minPrice = '0.005';
 
-        const dwarf_1 = await (await dwarfityCore.mintGenesisDwarf(randomGene)).wait();
+        const dwarf_1 = await (
+          await dwarfityCore.mintGenesisDwarf(randomGene)
+        ).wait();
         const dwarf_1_tokenId = dwarf_1.events[0].args.tokenId;
 
         await dwarfityCore
@@ -140,8 +148,12 @@ describe('Dwarfity', function () {
         const minPrice = '0.005';
 
         //  Mint 2 NFTs for mother and father
-        const dwarf_1 = await (await dwarfityCore.mintGenesisDwarf(randomGenes[0])).wait();
-        const dwarf_2 = await (await dwarfityCore.mintGenesisDwarf(randomGenes[1])).wait();
+        const dwarf_1 = await (
+          await dwarfityCore.mintGenesisDwarf(randomGenes[0])
+        ).wait();
+        const dwarf_2 = await (
+          await dwarfityCore.mintGenesisDwarf(randomGenes[1])
+        ).wait();
 
         //  Get the token id
         const dwarf_1_tokenId = dwarf_1.events[0].args.tokenId;
@@ -162,15 +174,21 @@ describe('Dwarfity', function () {
 
         //  Breed
         const breed = await (
-          await dwarfityCore.connect(user1).breedDwarves(dwarf_1_tokenId, dwarf_2_tokenId)
+          await dwarfityCore
+            .connect(user1)
+            .breedDwarves(dwarf_1_tokenId, dwarf_2_tokenId)
         ).wait();
 
         const eventIdx = breed.events.findIndex((e) => e.event === 'Birth');
 
         //  Assertions
         assert.notEqual(eventIdx, -1, 'There is no birth event');
-        breed.events[eventIdx].args.fatherTokenId.should.be.equal(dwarf_1_tokenId);
-        breed.events[eventIdx].args.motherTokenId.should.be.equal(dwarf_2_tokenId);
+        breed.events[eventIdx].args.fatherTokenId.should.be.equal(
+          dwarf_1_tokenId
+        );
+        breed.events[eventIdx].args.motherTokenId.should.be.equal(
+          dwarf_2_tokenId
+        );
       });
     });
   });

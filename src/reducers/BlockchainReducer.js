@@ -3,7 +3,9 @@ import { BlockchainTypes } from '../actions/types';
 const initialState = {
   provider: null,
   signer: null,
-  dwarfityCoreContract: null
+  account: '0x0',
+  dwarfityCoreContract: null,
+  initLoader: true
 };
 
 const BlockchainReducer = (state = initialState, action) => {
@@ -20,6 +22,12 @@ const BlockchainReducer = (state = initialState, action) => {
         provider: action.payload.signer
       };
 
+    case BlockchainTypes.SET_ACCOUNT:
+      return {
+        ...state,
+        account: action.payload.account
+      };
+
     case BlockchainTypes.SET_DWARFITY_CORE_CONTRACT:
       return {
         ...state,
@@ -28,6 +36,12 @@ const BlockchainReducer = (state = initialState, action) => {
 
     case BlockchainTypes.CLEAR_STATES:
       return initialState;
+
+    case BlockchainTypes.INIT_LOADER_CHANGE:
+      return {
+        ...state,
+        initLoader: action.payload.status
+      };
 
     default:
       return state;

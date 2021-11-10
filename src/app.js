@@ -6,6 +6,7 @@ import rootReducer from './reducers';
 
 //  Components
 import Main from './components/Main';
+import FullScreenLoader from './components/FullScreenLoader';
 
 function bindMiddleware(middleware) {
   if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
@@ -20,6 +21,7 @@ function app() {
 
   return (
     <Provider store={store}>
+      <FullScreenLoader />
       <Main />
     </Provider>
   );

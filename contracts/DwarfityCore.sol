@@ -28,6 +28,11 @@ contract DwarfityCore is DwarfityBase {
         return ownersTokenIds[_owner];
     }
 
+    function getTokensOfDeployer() external view returns (uint256[] memory) {
+        require(deployer != address(0x0), 'Deployer must set first');
+        return ownersTokenIds[deployer];
+    }
+
     function getDwarfByTokenId(uint256 _tokenId)
         public
         view

@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainNavbar from './MainNavbar';
+import { connect } from 'react-redux';
 import { Container, Card } from 'react-bootstrap';
+import { loadProviderAndContract } from '../actions/BlockchainAction';
+import { loadDwarvesForSale } from '../actions/CoreAction';
 
-function Main() {
+function Main(props) {
+  useEffect(() => {
+    async function startup() {
+      await props.loadProviderAndContract();
+      await props.loadDwarvesForSale();
+    }
+
+    startup();
+  }, []);
+
   return (
     <>
       <MainNavbar />
@@ -17,7 +29,10 @@ function Main() {
             <Card.Text style={{ fontSize: 14 }}>
               This is the mother of all dwarves. We called it the genesis dwarf
             </Card.Text>
-            <Card.Text className="fw-bold" style={{ fontSize: 14, color: 'green' }}>
+            <Card.Text
+              className="fw-bold"
+              style={{ fontSize: 14, color: 'green' }}
+            >
               Buy for 0.005 ETH
             </Card.Text>
           </Card.Body>
@@ -27,4 +42,13 @@ function Main() {
   );
 }
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    initLoader: state.blockchain.initLoader
+  };
+};
+
+export default connect(mapStateToProps, {
+  loadProviderAndContract,
+  loadDwarvesForSale
+})(Main);

@@ -1,13 +1,7 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
-import { loadProviderAndContract } from '../actions/BlockchainAction';
 
-function MainNavbar(props) {
-  useEffect(() => {
-    props.loadProviderAndContract();
-  }, []);
-
+function MainNavbar() {
   return (
     <Navbar
       className="py-3"
@@ -19,7 +13,10 @@ function MainNavbar(props) {
           Dwarfity
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="main-navbar-nav">
+        <Navbar.Collapse
+          className="justify-content-center"
+          id="main-navbar-nav"
+        >
           <Nav>
             <Nav.Link href="/" className="text-dark">
               Dwarves for sale
@@ -35,4 +32,4 @@ function MainNavbar(props) {
   );
 }
 
-export default connect(null, { loadProviderAndContract })(MainNavbar);
+export default MainNavbar;

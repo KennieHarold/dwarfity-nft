@@ -65,8 +65,8 @@ contract DwarfityBase is ERC721, GeneScience {
     }
 
     modifier onlyDeployer() {
-        require(deployer != address(0x0), 'Owner must set first');
-        require(msg.sender == deployer, 'Must owner');
+        require(deployer != address(0x0), 'Deployer must set first');
+        require(msg.sender == deployer, 'Must Deployer');
         _;
     }
 }

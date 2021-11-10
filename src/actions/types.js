@@ -6,3 +6,7 @@ export const BlockchainTypes = {
   CLEAR_STATES: 'blockchain/clear_states',
   INIT_LOADER_CHANGE: 'blockchain/init_loader_change'
 };
+
+export const CoreTypes = {
+  ADD_DWARF_FOR_SALE: 'blockchain/add_dwarf_for_sale'
+};

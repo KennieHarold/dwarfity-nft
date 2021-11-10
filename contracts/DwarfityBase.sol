@@ -15,20 +15,35 @@ contract DwarfityBase is ERC721, GeneScience {
         uint256 motherTokenId;
     }
 
-    Dwarf[] public dwarves;
-
     Counters.Counter public dwarfIndexTracker;
+
+    Dwarf[] public dwarves;
 
     address public deployer;
 
-    bool private called;
+    string public baseUri;
 
     mapping(address => uint256[]) public ownersTokenIds;
-
     mapping(string => uint256) public dwarfCountPerGene;
 
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {
-        called = true;
+        baseUri = '';
+    }
+
+    function setDeployer(address _deployer) internal {
+        deployer = _deployer;
+    }
+
+    function getContractBalance() external view onlyDeployer returns (uint256) {
+        return address(this).balance;
+    }
+
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseUri;
+    }
+
+    function setBaseUri(string memory _baseUri) external onlyDeployer {
+        baseUri = _baseUri;
     }
 
     function createDwarf(
@@ -54,14 +69,6 @@ contract DwarfityBase is ERC721, GeneScience {
 
     function mintGenesisDwarf(string memory _genes) external onlyDeployer {
         createDwarf(0, 0, _genes, msg.sender);
-    }
-
-    function setDeployer(address _deployer) internal {
-        deployer = _deployer;
-    }
-
-    function getContractBalance() external view onlyDeployer returns (uint256) {
-        return address(this).balance;
     }
 
     modifier onlyDeployer() {

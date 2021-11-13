@@ -1,0 +1,6 @@
+{
+  "events": {
+    "restart": "cls",
+    "start": "cls"
+  }
+}

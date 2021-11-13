@@ -10,11 +10,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "hardhat test",
     "solhint": "./node_modules/.bin/solhint -f table contracts/**/*.sol",
     "prettier:solidity": "./node_modules/.bin/prettier --write contracts/**/*.sol",
-    "deploy:ganache": "hardhat run --network ganache scripts/deploy.js"
+    "ganache:deploy": "hardhat run --network ganache scripts/deploy.js",
+    "ganache:mintgen": "hardhat run --network ganache scripts/mintGenNFTs.js"
   },
   "browserslist": {
     "production": [

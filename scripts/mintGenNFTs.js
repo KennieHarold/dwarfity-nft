@@ -3,7 +3,7 @@ const { ethers } = require('hardhat');
 async function main() {
   const dwarfityCore = await (
     await ethers.getContractFactory('DwarfityCore')
-  ).attach(process.env.REACT_APP_DWARFITY_CORE_ADDRESS);
+  ).attach(process.env.DWARFITY_CORE_ADDRESS);
 
   //  Mint 5 started dwarves
   await Promise.all([

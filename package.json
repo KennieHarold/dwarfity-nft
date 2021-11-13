@@ -8,10 +8,11 @@
   "license": "ISC",
   "private": "true",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "hardhat test",
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "react:test": "react-scripts test",
     "solhint": "./node_modules/.bin/solhint -f table contracts/**/*.sol",
+    "hardhat:test": "hardhat test",
     "prettier:solidity": "./node_modules/.bin/prettier --write contracts/**/*.sol",
     "ganache:deploy": "hardhat run --network ganache scripts/deploy.js",
     "ganache:mintgen": "hardhat run --network ganache scripts/mintGenNFTs.js"

@@ -1,5 +1,7 @@
 module.exports.setupRoutes = (app) => {
+  const metadataRoutes = require('./metadata.routes').router;
   const dwarfTokenRoutes = require('./dwarfToken.routes').router;
 
-  app.use('/dwarf_token', dwarfTokenRoutes);
+  app.use('/dwarfity', metadataRoutes); //  For metadata only
+  app.use('/dwarf-token', dwarfTokenRoutes);
 };

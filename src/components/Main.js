@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import MainNavbar from './MainNavbar';
 import { connect } from 'react-redux';
-import { Container, Card } from 'react-bootstrap';
+import { Container, Card, Button } from 'react-bootstrap';
 import { loadProviderAndContract } from '../actions/BlockchainAction';
 import { loadDwarvesForSale } from '../actions/CoreAction';
 
@@ -19,24 +19,27 @@ function Main(props) {
     <>
       <MainNavbar />
       <Container className="mt-5">
-        <Card style={{ width: '18rem', cursor: 'pointer' }}>
-          <Card.Img
-            variant="top"
-            src="https://res.cloudinary.com/drojzt0c0/image/upload/v1636297104/dwarfity/nfts/genesis_jwxzpg.png"
-          />
-          <Card.Body>
-            <Card.Title className="fw-bold">Dwarfity #0</Card.Title>
-            <Card.Text style={{ fontSize: 14 }}>
-              This is the mother of all dwarves. We called it the genesis dwarf
-            </Card.Text>
-            <Card.Text
-              className="fw-bold"
-              style={{ fontSize: 14, color: 'green' }}
+        <div className="d-flex flex-row flex-wrap justify-content-center pb-5">
+          {props.dwarvesForSale.map((dwarf) => (
+            <Card
+              className="m-2"
+              key={`dwarf-${dwarf._id}`}
+              style={{ width: '18rem', cursor: 'pointer' }}
             >
-              Buy for 0.005 ETH
-            </Card.Text>
-          </Card.Body>
-        </Card>
+              <Card.Img variant="top" src={dwarf?.image} />
+              <Card.Body>
+                <Card.Text
+                  className="text-secondary fw-bold"
+                  style={{ padding: 0, margin: 0 }}
+                >
+                  {dwarf?.name}
+                </Card.Text>
+                <Card.Text className="fw-bold">#{dwarf?.token_id}</Card.Text>
+                <Button size="sm">Buy {dwarf?.price?.value} ETH</Button>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
       </Container>
     </>
   );
@@ -44,7 +47,8 @@ function Main(props) {
 
 const mapStateToProps = (state) => {
   return {
-    initLoader: state.blockchain.initLoader
+    initLoader: state.blockchain.initLoader,
+    dwarvesForSale: state.core.dwarvesForSale
   };
 };
 

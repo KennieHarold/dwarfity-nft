@@ -9,8 +9,8 @@ const CoreReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case CoreTypes.ADD_DWARF_FOR_SALE:
-      index = dwarvesForSale.findIndex(
-        (dwarf) => dwarf.index === action.payload.dwarf.index
+      index = state.dwarvesForSale.findIndex(
+        (dwarf) => dwarf._id === action.payload.dwarf._id
       );
 
       if (index === -1) {

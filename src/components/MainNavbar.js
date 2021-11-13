@@ -19,10 +19,10 @@ function MainNavbar() {
         >
           <Nav>
             <Nav.Link href="/" className="text-dark">
-              Dwarves for sale
+              For sale
             </Nav.Link>
             <Nav.Link href="/" className="text-dark">
-              Your dwarves
+              Profile
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

@@ -17,12 +17,22 @@ const dwarfTokenSchema = new mongoose.Schema({
   image: {
     type: String
   },
-  extrnal_url: {
+  external_url: {
     type: String
   },
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  price: {
+    currency: {
+      type: String,
+      default: 'ETH'
+    },
+    value: {
+      type: Number,
+      min: [0, "Value can't be less than 0"]
+    }
   },
   attributes: [
     {

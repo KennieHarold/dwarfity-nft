@@ -8,6 +8,7 @@ import rootReducer from './reducers';
 //  Components
 import Main from './components/Main';
 import Profile from './components/Profile';
+import GlobalToast from './components/GlobalToast';
 
 function bindMiddleware(middleware) {
   if (process.env.REACT_APP_ENVIRONMENT !== 'production') {

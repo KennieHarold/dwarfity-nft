@@ -11,7 +11,7 @@ async function main() {
 
   //  Connect MongoDB
   const mongoUrl = process.env.DB_CONNECTION_STRING;
-  await mongoose.connect(mongoUrl);
+  mongoose.connect(mongoUrl);
 
   //  Mint 5 genesis dwarves in the blockchain
   await DwarfTokenModel.deleteMany({});
@@ -26,7 +26,7 @@ async function main() {
     })
   );
 
-  console.log('Minted genesis dwarves!');
+  console.log('Successfully minted!');
 }
 
 main().catch((error) => {

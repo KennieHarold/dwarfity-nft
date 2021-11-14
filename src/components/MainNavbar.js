@@ -8,8 +8,6 @@ function MainNavbar(props) {
   let navigate = useNavigate();
   let location = useLocation();
 
-  console.log(location);
-
   return (
     <Navbar
       className="py-3"

@@ -3,8 +3,12 @@ import MainNavbar from './MainNavbar';
 import { connect } from 'react-redux';
 import { Container, Card, Button } from 'react-bootstrap';
 import { loadProviderAndContract } from '../actions/BlockchainAction';
-import { loadDwarvesForSale } from '../actions/CoreAction';
+import {
+  loadDwarvesForSale,
+  purchaseDwarfFromSale
+} from '../actions/CoreAction';
 import FullScreenLoader from './FullScreenLoader';
+import GlobalToast from './GlobalToast';
 
 function Main(props) {
   const [loading, setLoading] = useState(true);
@@ -22,8 +26,11 @@ function Main(props) {
 
   return (
     <>
+      <GlobalToast />
       <MainNavbar />
-      {!loading ? (
+      {loading || props.initLoader ? (
+        <FullScreenLoader />
+      ) : (
         <Container className="mt-5">
           <div className="d-flex flex-row flex-wrap justify-content-center pb-5">
             {props.dwarvesForSale.map((dwarf) => (
@@ -41,14 +48,17 @@ function Main(props) {
                     {dwarf?.name}
                   </Card.Text>
                   <Card.Text className="fw-bold">#{dwarf?.token_id}</Card.Text>
-                  <Button size="sm">Buy {dwarf?.price?.value} ETH</Button>
+                  <Button
+                    onClick={() => props.purchaseDwarfFromSale(dwarf)}
+                    size="sm"
+                  >
+                    Buy {dwarf?.price?.value} ETH
+                  </Button>
                 </Card.Body>
               </Card>
             ))}
           </div>
         </Container>
-      ) : (
-        <FullScreenLoader />
       )}
     </>
   );
@@ -56,12 +66,13 @@ function Main(props) {
 
 const mapStateToProps = (state) => {
   return {
-    initLoader: state.blockchain.initLoader,
+    initLoader: state.core.initLoader,
     dwarvesForSale: state.core.dwarvesForSale
   };
 };
 
 export default connect(mapStateToProps, {
   loadProviderAndContract,
-  loadDwarvesForSale
+  loadDwarvesForSale,
+  purchaseDwarfFromSale
 })(Main);

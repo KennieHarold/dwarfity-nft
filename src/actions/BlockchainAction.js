@@ -42,11 +42,6 @@ export const loadProviderAndContract = () => {
     } else {
       window.alert('Non ethereum browser');
     }
-
-    dispatch({
-      type: BlockchainTypes.INIT_LOADER_CHANGE,
-      payload: { status: false }
-    });
   };
 };
 

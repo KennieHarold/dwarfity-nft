@@ -65,6 +65,7 @@ describe('Dwarfity', function () {
       expect(await dwarfityCore.balanceOf(deployer.address)).to.be.equal(1);
 
       const tokenIds = await dwarfityCore.getTokenIds(deployer.address);
+
       tokenIds.should.be.lengthOf(1);
       tokenIds[0].toString().should.be.equal('0');
     });
@@ -123,6 +124,7 @@ describe('Dwarfity', function () {
         const dwarf_1 = await (
           await dwarfityCore.mintGenesisDwarf(randomGene)
         ).wait();
+
         const dwarf_1_tokenId = dwarf_1.events[0].args.tokenId;
 
         await dwarfityCore
@@ -134,11 +136,20 @@ describe('Dwarfity', function () {
         const tokenId = await dwarfityCore.ownerOf(dwarf_1_tokenId.toString());
         tokenId.toString().should.be.equal(user1.address);
 
+        const contractBalance = await dwarfityCore.getContractBalance();
+        fromWei(contractBalance.toString()).should.be.equal(minPrice);
+
+        //  Get ERC721 contract balance
         const balance = await dwarfityCore.balanceOf(user1.address);
         balance.toString().should.be.equal('1');
 
-        const contractBalance = await dwarfityCore.getContractBalance();
-        fromWei(contractBalance.toString()).should.be.equal(minPrice);
+        //  Compare user's token ids to deployer's token ids
+        const usersTokenIds = await dwarfityCore.getTokenIds(user1.address);
+        const deployersTokenIds = await dwarfityCore.getTokenIds(
+          deployer.address
+        );
+        usersTokenIds.should.be.lengthOf(1);
+        deployersTokenIds.should.be.lengthOf(1);
       });
     });
 

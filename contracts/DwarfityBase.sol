@@ -24,6 +24,7 @@ contract DwarfityBase is ERC721, GeneScience {
     string public baseUri;
 
     mapping(address => uint256[]) public ownersTokenIds;
+    mapping(address => mapping(uint256 => int256)) public ownersTokenIdAtIndex;
     mapping(string => uint256) public dwarfCountPerGene;
 
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {
@@ -46,6 +47,14 @@ contract DwarfityBase is ERC721, GeneScience {
         baseUri = _baseUri;
     }
 
+    function addOwnerShip (address _owner, uint256 tokenId) internal {
+        require(_owner != address(0x0), "Owner must a valid address");
+
+        ownersTokenIds[_owner].push(tokenId);
+        int256 tokenIndex = int256(ownersTokenIds[_owner].length - 1);
+        ownersTokenIdAtIndex[_owner][tokenId] = tokenIndex;
+    }
+
     function createDwarf(
         uint256 _fatherTokenId,
         uint256 _motherTokenId,
@@ -59,9 +68,11 @@ contract DwarfityBase is ERC721, GeneScience {
         Dwarf memory _dwarf = Dwarf({genes: _genes, fatherTokenId: _fatherTokenId, motherTokenId: _motherTokenId});
 
         _mint(_owner, newTokenId);
+        addOwnerShip(_owner, newTokenId);
+
         dwarves.push(_dwarf);
-        ownersTokenIds[_owner].push(newTokenId);
         dwarfIndexTracker.increment();
+
         dwarfCountPerGene[_genes] += 1;
 
         return newTokenId;

@@ -5,7 +5,8 @@ const initialState = {
   signer: null,
   account: '0x0',
   dwarfityCoreContract: null,
-  initLoader: true
+  initLoader: true,
+  walletLoader: false
 };
 
 const BlockchainReducer = (state = initialState, action) => {
@@ -41,6 +42,12 @@ const BlockchainReducer = (state = initialState, action) => {
       return {
         ...state,
         initLoader: action.payload.status
+      };
+
+    case BlockchainTypes.WALLET_LOADER_CHANGE:
+      return {
+        ...state,
+        walletLoader: action.payload.status
       };
 
     default:

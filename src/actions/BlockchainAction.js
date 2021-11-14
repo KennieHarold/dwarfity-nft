@@ -49,3 +49,45 @@ export const loadProviderAndContract = () => {
     });
   };
 };
+
+export const connectWallet = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: BlockchainTypes.WALLET_LOADER_CHANGE,
+      payload: { status: true }
+    });
+
+    if (typeof window.ethereum !== 'undefined') {
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const contract = new ethers.Contract(
+        contractAddress,
+        dwarfityContract.abi,
+        signer
+      );
+
+      dispatch({ type: BlockchainTypes.SET_PROVIDER, payload: { provider } });
+      dispatch({ type: BlockchainTypes.SET_SIGNER, payload: { signer } });
+      dispatch({
+        type: BlockchainTypes.SET_DWARFITY_CORE_CONTRACT,
+        payload: { contract }
+      });
+      dispatch({
+        type: BlockchainTypes.SET_ACCOUNT,
+        payload: { account: accounts[0] }
+      });
+    } else {
+      window.alert('Non ethereum browser');
+    }
+
+    dispatch({
+      type: BlockchainTypes.WALLET_LOADER_CHANGE,
+      payload: { status: false }
+    });
+  };
+};

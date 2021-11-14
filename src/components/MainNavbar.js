@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
+import { connectWallet } from '../actions/BlockchainAction';
 
-function MainNavbar() {
+function MainNavbar(props) {
   return (
     <Navbar
       className="py-3"
@@ -13,10 +15,7 @@ function MainNavbar() {
           Dwarfity
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse
-          className="justify-content-center"
-          id="main-navbar-nav"
-        >
+        <Navbar.Collapse id="main-navbar-nav">
           <Nav>
             <Nav.Link href="/" className="text-dark">
               For sale
@@ -26,10 +25,27 @@ function MainNavbar() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        <Button className="ms-auto">Connect Wallet</Button>
+        {props.account !== '0x0' ? (
+          <span>Connected to {props.account.substring(0, 7)}...</span>
+        ) : (
+          <Button
+            disabled={props.walletLoader}
+            onClick={props.connectWallet}
+            className="ms-auto"
+          >
+            Connect Wallet
+          </Button>
+        )}
       </Container>
     </Navbar>
   );
 }
 
-export default MainNavbar;
+const mapStateToProps = (state) => {
+  return {
+    walletLoader: state.blockchain.walletLoader,
+    account: state.blockchain.account
+  };
+};
+
+export default connect(mapStateToProps, { connectWallet })(MainNavbar);

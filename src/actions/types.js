@@ -4,7 +4,8 @@ export const BlockchainTypes = {
   SET_ACCOUNT: 'blockchain/set_account',
   SET_DWARFITY_CORE_CONTRACT: 'blockchain/set_dwarfity_core_contract',
   CLEAR_STATES: 'blockchain/clear_states',
-  INIT_LOADER_CHANGE: 'blockchain/init_loader_change'
+  INIT_LOADER_CHANGE: 'blockchain/init_loader_change',
+  WALLET_LOADER_CHANGE: 'blockchain/wallet_loader_change'
 };
 
 export const CoreTypes = {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
@@ -6,7 +7,7 @@ import rootReducer from './reducers';
 
 //  Components
 import Main from './components/Main';
-import FullScreenLoader from './components/FullScreenLoader';
+import Profile from './components/Profile';
 
 function bindMiddleware(middleware) {
   if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
@@ -21,8 +22,12 @@ function app() {
 
   return (
     <Provider store={store}>
-      <FullScreenLoader />
-      <Main />
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Main />} />
+          <Route exact path="/profile" element={<Profile />} />
+        </Routes>
+      </Router>
     </Provider>
   );
 }

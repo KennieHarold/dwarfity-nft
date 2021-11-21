@@ -9,3 +9,5 @@ cache
 artifacts
 
 fixtures
+
+node_server/uploads

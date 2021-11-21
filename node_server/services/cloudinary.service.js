@@ -8,11 +8,15 @@ cloudinary.config({
 });
 
 module.exports.uploadTokenImage = async (localPath) => {
-  const token_path = 'dwarfity/tokens';
+  try {
+    const token_path = 'dwarfity/tokens';
 
-  const response = await cloudinary.v2.uploader.upload(localPath, {
-    folder: token_path
-  });
+    const response = await cloudinary.v2.uploader.upload(localPath, {
+      folder: token_path
+    });
 
-  console.log(response);
+    return { response, error: undefined };
+  } catch (error) {
+    return { response: undefined, error };
+  }
 };

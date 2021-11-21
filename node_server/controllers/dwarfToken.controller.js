@@ -49,6 +49,19 @@ module.exports.getDwarfByTokenId = async (req, res) => {
   }
 };
 
+module.exports.addDwarf = async (req, res) => {
+  console.log(req.body);
+
+  try {
+    await DwarfTokenModel({ ...req.body }).save();
+
+    res.status(201).send('Success!');
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('There is an error');
+  }
+};
+
 module.exports.generateImageFromGene = async (req, res) => {
   try {
     const reqGene = req.params.gene;

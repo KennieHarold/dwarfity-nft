@@ -30,6 +30,7 @@ const dwarfTokenSchema = new mongoose.Schema({
       default: 'ETH'
     },
     value: {
+      default: 0.001,
       type: Number,
       min: [0, "Value can't be less than 0"]
     }

@@ -61,7 +61,9 @@ export const getUsersDwarves = () => {
     dispatch({ type: CoreTypes.CLEAR_USER_DWARVES });
 
     for (let tokenId of tokenIds) {
-      const dwarf = await CoreServiceInstance.getDwarfityByTokenId(tokenId);
+      const dwarf = await CoreServiceInstance.getDwarfityByTokenId(
+        tokenId
+      ).catch((error) => console.log(error));
 
       if (dwarf && dwarf !== undefined) {
         dispatch({ type: CoreTypes.ADD_USER_DWARF, payload: { dwarf } });
@@ -70,6 +72,51 @@ export const getUsersDwarves = () => {
 
     dispatch({
       type: CoreTypes.USER_LOADER_CHANGE,
+      payload: { status: false }
+    });
+  };
+};
+
+export const breedDwarvesAndGenerateImage = (
+  parentXtokenId,
+  parentYtokenId
+) => {
+  return async (dispatch, getState) => {
+    const { dwarfityCoreContract, account } = getState().blockchain;
+
+    dispatch({
+      type: CoreTypes.BREEDING_LOADER_CHANGE,
+      payload: { status: true }
+    });
+    const response = await (
+      await dwarfityCoreContract.breedDwarves(parentXtokenId, parentYtokenId)
+    ).wait();
+
+    const index = response.events.findIndex((event) => event.event === 'Birth');
+
+    if (index !== -1) {
+      const newGene = response.events[index].args.genes;
+      const newTokenId = response.events[index].args.tokenId.toString();
+
+      const upload = await CoreServiceInstance.generateImageByGene(
+        newGene
+      ).catch((error) => console.log(error));
+
+      if (upload && upload !== undefined) {
+        const addRes = await CoreServiceInstance.addDwarfToDb({
+          image: upload.secure_url,
+          token_id: newTokenId,
+          name: 'Dwarfity-Breed-' + newTokenId
+        }).catch((error) => console.log(error));
+
+        if (addRes && addRes !== undefined) {
+          window.location.href = '/view-dwarf/' + newTokenId;
+        }
+      }
+    }
+
+    dispatch({
+      type: CoreTypes.BREEDING_LOADER_CHANGE,
       payload: { status: false }
     });
   };

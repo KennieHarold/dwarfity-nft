@@ -14,5 +14,6 @@ export const CoreTypes = {
   INIT_LOADER_CHANGE: 'core/init_loader_change',
   ADD_USER_DWARF: 'core/add_user_dwarf',
   CLEAR_USER_DWARVES: 'core/clear_user_dwarves',
-  USER_LOADER_CHANGE: 'core/user_loader_change'
+  USER_LOADER_CHANGE: 'core/user_loader_change',
+  BREEDING_LOADER_CHANGE: 'core/breeding_loader_change'
 };

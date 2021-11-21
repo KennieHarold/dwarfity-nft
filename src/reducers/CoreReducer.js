@@ -9,7 +9,8 @@ const initialState = {
     status: false,
     title: 'Dwarfity',
     text: "Woohoo, hope you're doing well!"
-  }
+  },
+  breedingLoader: false
 };
 
 const CoreReducer = (state = initialState, action) => {
@@ -83,6 +84,12 @@ const CoreReducer = (state = initialState, action) => {
       return {
         ...state,
         userLoader: action.payload.status
+      };
+
+    case CoreTypes.BREEDING_LOADER_CHANGE:
+      return {
+        ...state,
+        breedingLoader: action.payload.status
       };
 
     default:

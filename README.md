@@ -51,5 +51,6 @@ REACT_APP_DWARFITY_CORE_ADDRESS=
 ## Third party apps used
 
 MongoDB - For storing the NFT's metadata
+
 Cloudinary - For storing the NFT's image file
 

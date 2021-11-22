@@ -1,42 +1,55 @@
-# Advanced Sample Hardhat Project
+## Welcome to my first NFT project: Dwarfity-NFT
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+This is just a simple NFT breeding DApp which uses a simple crossover gene mixing algorithm using the parent's genome to generate a new digital art NFT.
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+## Project Setup
+After cloning the repo, run the following command to install the project dependencies:
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.js
-node scripts/deploy.js
-npx eslint '**/*.js'
-npx eslint '**/*.js' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+```bash
+npm install
 ```
 
-# Etherscan verification
+Then compile and deploy the smart contract to ganache, run the following command:
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/deploy.js
+```bash
+npm run ganache:deploy
 ```
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
+To start the node server, run the following command:
 
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
+```bash
+npm run node:start
 ```
+
+To start the react app, run the following command:
+
+```bash
+npm start
+```
+
+Make sure yout mint initial NFTs in order you can buy them and used it for breeding, just create a fixtures folder and a sample data for the NFT's metadata (see /sample-data/genDwarvesData.js) and run the following command:
+
+```bash
+npm run ganache:mintgen
+```
+
+Required values for the .env file:
+
+```bash
+DWARFITY_CORE_ADDRESS=
+DB_CONNECTION_STRING=
+NODE_PORT=
+NODE_ENVIRONMENT=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+SECRET_KEY=
+REACT_APP_ENVIRONMENT=
+REACT_APP_DWARFITY_CORE_ADDRESS=
+```
+
+## Third party apps used
+
+MongoDB - For storing the NFT's metadata
+Cloudinary - For storing the NFT's image file
+

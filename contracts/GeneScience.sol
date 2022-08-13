@@ -1,12 +1,29 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import 'hardhat/console.sol';
+/**
+    * @title Dwarfity
+    * @dev Sample attributes mapping
+    
+    body: ['black', 'clay', 'glossy'],
+    eye: ['black', 'highlights', 'silver'],
+    gloves: ['black', 'gold', 'highlights'],
+    gloves_lining: ['black', 'glossy', 'silver'],
+    mustache: ['glossy', 'gold', 'silver'],
+    shoe: ['black', 'gold', 'highlights'],
+    shoe_lining: ['black', 'glossy', 'silver'],
+    shoulder_plate: ['gold', 'highlights', 'silver'],
+    shoulder_plate_lining: ['black', 'dark', 'glossy']
+*/
 
 contract Constants {
+    // We make sure our rating is 100 percent based
     uint256 internal constant HUNDRED = 100;
+    // Number of attributes
     uint256 internal constant GENE_LENGTH = 9;
+    // How many types in every attribute?
     uint256 internal constant GENE_ATTRS = 3;
+    // Mutation chance
     uint256 internal constant MUTATION_CHANCE = 15; // 15%
 }
 

@@ -27,7 +27,7 @@ To start the react app, run the following command:
 npm start
 ```
 
-Make sure yout mint initial NFTs in order you can buy them and used it for breeding, just create a fixtures folder and a sample data for the NFT's metadata (see /sample-data/genDwarvesData.js) and run the following command:
+Make sure you mint initial NFTs in order you can buy them and used it for breeding, just create a `fixtures` folder and a sample data for the NFT's metadata (see /sample-data/genDwarvesData.js) and run the following command:
 
 ```bash
 npm run ganache:mintgen
@@ -50,7 +50,8 @@ REACT_APP_DWARFITY_CORE_ADDRESS=
 
 ## Third party apps used
 
-MongoDB - For storing the NFT's metadata
+MongoDB - For storing NFT's metadata
 
-Cloudinary - For storing the NFT's image file
+Cloudinary - For storing NFT's image file
 
+Ganache - Ethereum based locat test network

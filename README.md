@@ -1,3 +1,7 @@
+## Welcome to my first NFT project: Dwarfity-NFT
+
+This is just a simple NFT breeding DApp which uses a simple crossover gene mixing algorithm using the parent's genome to generate a new digital art NFT.
+
 ## Project Setup
 After cloning the repo, run the following command to install the project dependencies:
 
